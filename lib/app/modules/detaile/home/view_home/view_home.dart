@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:forest/app/core/localization/locale_controller.dart';
-import 'package:forest/app/modules/detaile/home/widget/language_dialog.dart';
+import 'package:forest/app/modules/detaile/home/widget_home/language_dialog.dart';
 
 class ViewHome extends StatelessWidget {
   const ViewHome({super.key});
