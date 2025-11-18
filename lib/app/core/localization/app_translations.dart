@@ -11,8 +11,12 @@ class AppTranslations extends Translations {
       'splash_loading': 'Loading...',
 
       // Home Screen
-      'home_title': 'Home',
-      'welcome': 'Welcome',
+      'forest': 'Forest',
+      'statistics': 'Statistics',
+      'Settings': 'Settings',
+      'plant': 'Plant',
+      'todays Tree': "Today's Tree",
+      'home': 'Home',
 
       // Language
       'language': 'Language',
@@ -21,16 +25,17 @@ class AppTranslations extends Translations {
       'persian': 'Persian',
     },
     'fa_IR': {
-      // Common
-      'app_name': 'جنگل',
-
       // Splash Screen
       'splash_loading': 'در حال بارگذاری...',
+      'app_name': 'جنگل',
 
       // Home Screen
-      'home_title': 'خانه',
-      'welcome': 'خوش آمدید',
-
+      'forest': 'جنگل',
+      'statistics': 'آمار',
+      'Settings': 'تنظیمات',
+      'plant': 'کاشتن',
+      'todays Tree': 'درخت امروز',
+      'home': 'خانه',
       // Language
       'language': 'زبان',
       'select_language': 'زبان مورد نظر خود را انتخاب کنید',

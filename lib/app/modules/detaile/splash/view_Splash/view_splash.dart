@@ -14,7 +14,7 @@ class ViewSplash extends StatelessWidget {
             //icon app
             Icon(Icons.forest, size: 100, color: Colors.green.shade700),
             const SizedBox(height: 20),
-            // نام برنامه با استفاده از ترجمه
+            //App name using translation
             Text(
               'app_name'.tr,
               style: const TextStyle(
