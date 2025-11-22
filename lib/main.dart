@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:forest/app/routes/app_pages.dart';
-import 'package:forest/app/core/localization/app_translations.dart';
 import 'package:forest/app/core/localization/locale_controller.dart';
+import 'package:forest/app/core/localization/app_translations.dart';
 
-void main() {
-  // Initialize Locale Controller
-  Get.put(LocaleController());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+
+  //  Locale Controller for change language.
+  final localeController = Get.put(LocaleController());
 
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Forest',
+      theme: ThemeData(fontFamily: 'PeydaFaNum'),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      // تنظیمات چندزبانه
+      // settings language
       translations: AppTranslations(),
-      locale: const Locale('fa', 'IR'), // default language
+      locale: localeController.locale.value,
       fallbackLocale: const Locale(
         'en',
         'US',

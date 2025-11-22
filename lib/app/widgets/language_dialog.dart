@@ -164,3 +164,38 @@ Widget _buildLanguageOption({
     ),
   );
 }
+
+class LanguageSwitcherButton extends StatelessWidget {
+  const LanguageSwitcherButton({
+    super.key,
+    this.iconColor = Colors.white,
+    this.backgroundColor,
+    this.margin = EdgeInsets.zero,
+    this.borderRadius = 16,
+    this.padding = const EdgeInsets.all(8),
+  });
+
+  final Color iconColor;
+  final Color? backgroundColor;
+  final EdgeInsetsGeometry margin;
+  final double borderRadius;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    final LocaleController localeController = Get.find<LocaleController>();
+
+    return Container(
+      margin: margin,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      child: IconButton(
+        padding: padding,
+        icon: Icon(Icons.language, color: iconColor),
+        onPressed: () => showLanguageDialog(context, localeController),
+      ),
+    );
+  }
+}

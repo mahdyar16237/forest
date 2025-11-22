@@ -4,6 +4,10 @@ import 'package:forest/app/modules/detaile/splash/Splash_biding/binding_splash.d
 import 'package:forest/app/modules/detaile/splash/view_Splash/view_splash.dart';
 import 'package:forest/app/modules/main/main_bindings/main_binding.dart';
 import 'package:forest/app/modules/main/main_views/main_view.dart';
+import 'package:forest/app/modules/detaile/Timer/Timer_view/Timer_view.dart';
+import 'package:forest/app/modules/detaile/Statistics/Statistics_view/Statistics_view.dart';
+import 'package:forest/app/modules/detaile/Settings/Settings_view/Settings_view.dart';
+import 'package:forest/app/modules/detaile/Settings/Settings_binding/Settings.binding.dart';
 
 class AppPages {
   AppPages._();
@@ -20,6 +24,21 @@ class AppPages {
       name: Routes.HOME,
       page: () => const MainView(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: Routes.TIMER,
+      page: () => const TimerView(),
+      binding: MainBinding(),
+    ),
+    GetPage(
+      name: Routes.STATISTICS,
+      page: () => const StatisticsView(),
+      binding: MainBinding(),
+    ),
+    GetPage(
+      name: Routes.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

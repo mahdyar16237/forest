@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:forest/app/core/localization/locale_controller.dart';
-import 'package:forest/app/modules/detaile/home/widget_home/language_dialog.dart';
 import 'package:forest/app/core/constants/app_colors.dart';
 import 'package:forest/app/modules/detaile/home/widget_home/todays_tree.dart';
 import 'package:forest/app/modules/detaile/home/widget_home/container_image.dart';
+import 'package:forest/app/routes/app_routes.dart';
 
 class ViewHome extends StatelessWidget {
   const ViewHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final localeController = Get.find<LocaleController>();
-
     return Scaffold(
       backgroundColor: AppColors.backgroundHome,
       body: SafeArea(
@@ -45,32 +42,22 @@ class ViewHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(Routes.TIMER);
+                      },
                       child: Text(
                         'plant'.tr,
-                        style: TextStyle(color: AppColors.textColor),
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   todayTreeCard(context),
                   const SizedBox(height: 50),
                 ],
-              ),
-            ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.language, color: Colors.white),
-                  onPressed: () =>
-                      showLanguageDialog(context, localeController),
-                ),
               ),
             ),
           ],

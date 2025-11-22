@@ -33,7 +33,7 @@ Widget todayTreeCard(BuildContext context) {
             ),
             const SizedBox(width: 12),
             Text(
-              'todays Tree'.tr,
+              'todays_tree'.tr,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: const Color(0xFF234123),
                 fontWeight: FontWeight.w700,
