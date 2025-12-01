@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forest/app/core/constants/app_colors.dart';
 
 Widget containerImage() {
   return Container(
@@ -10,9 +11,9 @@ Widget containerImage() {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFFE9F4E1), // سبز خیلی روشن بالا
-          Color(0xFFD8EDC8), // میانه
-          Color(0xFFC9E3AE), // پایین
+          AppColors.homeProgressTrack,
+          AppColors.homeProgressMid,
+          AppColors.homeProgressEnd,
         ],
       ),
     ),
@@ -29,7 +30,7 @@ Widget containerImage() {
               borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(100),
               ),
-              color: const Color(0xFFA67C52).withOpacity(0.85),
+              color: AppColors.homeSoil.withOpacity(0.85),
             ),
           ),
         ),

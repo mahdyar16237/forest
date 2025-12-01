@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forest/app/core/constants/app_colors.dart';
 
 Widget settingsTile({
   required IconData icon,
@@ -19,10 +20,10 @@ Widget settingsTile({
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: const Color(0xFFE5F2E3),
+              color: AppColors.settingsIconBackground,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: const Color(0xFF2F6B32)),
+            child: Icon(icon, color: AppColors.timerPrimary),
           ),
           const SizedBox(width: 16),
           Expanded(

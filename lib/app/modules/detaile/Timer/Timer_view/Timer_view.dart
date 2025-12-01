@@ -1,83 +1,170 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:forest/app/core/constants/app_colors.dart';
 import 'package:forest/app/modules/detaile/Timer/widget/container_timer.dart';
 import 'package:forest/app/modules/detaile/Timer/widget/actionButton.dart';
+import 'package:forest/app/modules/detaile/Timer/Timer_controller/Timer_controller.dart';
 import 'package:forest/app/modules/main/main_controllers/main_controller.dart';
 import 'package:forest/app/modules/main/widgets/main_scaffold.dart';
 import 'package:forest/app/routes/app_routes.dart';
 
-class TimerView extends GetView<MainController> {
+class TimerView extends GetView<TimerController> {
   const TimerView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 229, 188),
+      backgroundColor: AppColors.backgroundTimer,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 240, 229, 188),
+        backgroundColor: AppColors.backgroundTimer,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Color(0xFF2F3A2F),
+            color: AppColors.timerAccent,
           ),
-          onPressed: Get.back,
+          onPressed: () {
+            // save timer state
+            if (controller.isRunning.value || controller.isPaused.value) {
+              controller.saveTimerState();
+            }
+            Get.back();
+          },
         ),
         centerTitle: true,
         title: Text(
           'focus_timer'.tr,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w700,
-            color: const Color(0xFF2F3A2F),
+            color: AppColors.timerAccent,
           ),
         ),
       ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 50),
-              Text(
-                'focus_timer'.tr,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF2F3A2F),
-                ),
-              ),
-              const SizedBox(height: 120),
-              timerCircle(context: context, progress: 0.55, timeLabel: '25:00'),
-              const SizedBox(height: 170),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: timerActionButton(
+                    const SizedBox(height: 30),
+                    Text(
+                      'focus_timer'.tr,
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.timerAccent,
+                          ),
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.1,
+                      child: const SizedBox.shrink(),
+                    ),
+                    Obx(
+                      () => timerCircle(
                         context: context,
-                        label: 'cancel'.tr,
-                        color: const Color(0xFFD46A50),
-                        onTap: () {},
+                        progress: controller.progress,
+                        timeLabel: controller.formattedTime,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: timerActionButton(
-                        context: context,
-                        label: 'done'.tr,
-                        color: const Color(0xFF2F6B32),
-                        onTap: () {},
+                    SizedBox(
+                      height: constraints.maxHeight * 0.15,
+                      child: const SizedBox.shrink(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Obx(
+                        () => Column(
+                          children: [
+                            //start timer
+                            if (!controller.isRunning.value &&
+                                !controller.isPaused.value &&
+                                controller.remainingSeconds.value > 0)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: timerActionButton(
+                                      context: context,
+                                      label: 'start'.tr,
+                                      color: AppColors.timerPrimary,
+                                      onTap: () {
+                                        controller.startTimer();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            if (controller.isRunning.value ||
+                                controller.isPaused.value)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: timerActionButton(
+                                      context: context,
+                                      label: controller.isRunning.value
+                                          ? 'pause'.tr
+                                          : 'resume'.tr,
+                                      color: AppColors.timerPause,
+                                      onTap: () {
+                                        if (controller.isRunning.value) {
+                                          controller.pauseTimer();
+                                        } else {
+                                          controller.resumeTimer();
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            SizedBox(height: 20),
+                            if (controller.isRunning.value ||
+                                controller.isPaused.value)
+                              const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: timerActionButton(
+                                    context: context,
+                                    label: 'cancel'.tr,
+                                    color: AppColors.timerDanger,
+                                    onTap: () {
+                                      controller.cancelTimer();
+                                      Get.back();
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: timerActionButton(
+                                    context: context,
+                                    label: 'done'.tr,
+                                    color: AppColors.timerPrimary,
+                                    onTap: () {
+                                      controller.completeTimer();
+                                      Get.back();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
       onNavigationTap: (index) {
-        controller.changeTab(index);
+        final mainController = Get.find<MainController>();
+        mainController.changeTab(index);
         if (Get.currentRoute != Routes.HOME) {
           Get.offAllNamed(Routes.HOME);
         }

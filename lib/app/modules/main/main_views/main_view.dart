@@ -9,7 +9,7 @@ import 'package:forest/app/modules/main/widgets/main_scaffold.dart';
 class MainView extends GetView<MainController> {
   const MainView({super.key});
 
-  static final List<Widget> _pages = [
+  List<Widget> get _pages => [
     const ViewHome(),
     const StatisticsView(),
     const SettingsView(),

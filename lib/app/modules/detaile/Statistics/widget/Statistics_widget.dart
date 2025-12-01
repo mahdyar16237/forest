@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:forest/app/core/constants/app_colors.dart';
+import 'package:forest/app/modules/detaile/Statistics/Statistics_controller/Statistics_controller.dart';
 
-class StatisticsChart extends StatelessWidget {
-  const StatisticsChart({
-    super.key,
-    required this.dayLabels,
-    required this.dayValues,
-  });
+Widget statisticsChart({required StatisticsController controller}) {
+  return Obx(() {
+    final chartData = controller.chartData;
+    final labels = chartData.labels;
+    final heights = chartData.scaledHeights;
 
-  final List<String> dayLabels;
-  final List<double> dayValues;
-
-  @override
-  Widget build(BuildContext context) {
-    final int itemCount = dayLabels.length <= dayValues.length
-        ? dayLabels.length
-        : dayValues.length;
-
-    if (itemCount == 0) {
+    if (!chartData.hasData || labels.isEmpty || heights.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    final itemCount = labels.length <= heights.length
+        ? labels.length
+        : heights.length;
 
     return SizedBox(
       height: 180,
@@ -27,34 +23,48 @@ class StatisticsChart extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(itemCount, (index) {
-          final double value = dayValues[index];
-          final String day = dayLabels[index];
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeOut,
-                width: 30,
-                height: value,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2F6B32),
-                  borderRadius: BorderRadius.circular(8),
+          final String day = labels[index];
+          final double scaledHeight = heights[index];
+          // Ensure minimum height of 2 pixels to avoid rendering issues
+          final double displayHeight = scaledHeight > 0 ? scaledHeight : 2.0;
+
+          return Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOut,
+                  width: 30,
+                  height: displayHeight,
+                  decoration: BoxDecoration(
+                    color: scaledHeight > 0
+                        ? AppColors.statsBar
+                        : AppColors.statsBar.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                day,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textColor,
+                const SizedBox(height: 8),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    day,
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textColor,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }),
       ),
     );
-  }
+  });
 }

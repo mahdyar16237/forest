@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:forest/app/core/constants/app_colors.dart';
 
 Widget settingsProfileCard({
   required String name,
@@ -24,8 +25,8 @@ Widget settingsProfileCard({
       children: [
         CircleAvatar(
           radius: 40,
-          backgroundColor: const Color(0xFFE5F2E3),
-          child: Icon(Icons.person, color: Colors.green.shade700, size: 50),
+          backgroundColor: AppColors.settingsIconBackground,
+          child: Icon(Icons.person, color: AppColors.timerPrimary, size: 50),
         ),
         const SizedBox(height: 16),
         Text(
@@ -45,7 +46,7 @@ Widget settingsProfileCard({
           child: Text(
             'edit_profile'.tr,
             style: const TextStyle(
-              color: Color(0xFF2F6B32),
+              color: AppColors.timerPrimary,
               fontWeight: FontWeight.w600,
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:forest/app/modules/detaile/splash/view_Splash/view_splash.dart';
 import 'package:forest/app/modules/main/main_bindings/main_binding.dart';
 import 'package:forest/app/modules/main/main_views/main_view.dart';
 import 'package:forest/app/modules/detaile/Timer/Timer_view/Timer_view.dart';
+import 'package:forest/app/modules/detaile/Timer/Timer_biding/Timer_binding.dart';
 import 'package:forest/app/modules/detaile/Statistics/Statistics_view/Statistics_view.dart';
 import 'package:forest/app/modules/detaile/Settings/Settings_view/Settings_view.dart';
 import 'package:forest/app/modules/detaile/Settings/Settings_binding/Settings.binding.dart';
@@ -28,7 +29,7 @@ class AppPages {
     GetPage(
       name: Routes.TIMER,
       page: () => const TimerView(),
-      binding: MainBinding(),
+      binding: TimerBinding(),
     ),
     GetPage(
       name: Routes.STATISTICS,

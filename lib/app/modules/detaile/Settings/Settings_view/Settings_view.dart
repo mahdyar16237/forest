@@ -24,22 +24,25 @@ class SettingsView extends GetView<SettingsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              settingsSectionHeader(text: 'profile_section'.tr),
+              const SizedBox(height: 12),
               Center(
                 child: Obx(
                   () => settingsProfileCard(
                     name: controller.displayName.value,
                     email: controller.email.value,
                     onEdit: () {
-                      Get.snackbar(
-                        'settings'.tr,
-                        'coming_soon'.tr,
-                        snackPosition: SnackPosition.BOTTOM,
+                      showEditProfileDialog(
+                        context: context,
+                        controller: controller,
                       );
                     },
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+              settingsSectionHeader(text: 'sound_notifications'.tr),
+              const SizedBox(height: 12),
               settingsSectionCard(
                 children: [
                   Obx(
@@ -60,7 +63,7 @@ class SettingsView extends GetView<SettingsController> {
                       title: 'notifications'.tr,
                       trailing: Switch(
                         value: controller.notificationsEnabled.value,
-                        activeColor: const Color(0xFF2F6B32),
+                        activeColor: AppColors.timerPrimary,
                         onChanged: controller.toggleNotifications,
                       ),
                     ),
@@ -86,39 +89,11 @@ class SettingsView extends GetView<SettingsController> {
                       ),
                     ),
                   ),
-                  const Divider(height: 0),
-                  Obx(
-                    () => settingsTile(
-                      icon: Icons.spa_rounded,
-                      title: 'short_break'.tr,
-                      trailingText:
-                          '${controller.shortBreakMinutes.value} ${'minutes_short'.tr}',
-                      onTap: () => showDurationPickerSheet(
-                        context: context,
-                        title: 'short_break'.tr,
-                        initialValue: controller.shortBreakMinutes.value,
-                        onSelected: controller.updateShortBreak,
-                      ),
-                    ),
-                  ),
-                  const Divider(height: 0),
-                  Obx(
-                    () => settingsTile(
-                      icon: Icons.local_florist_rounded,
-                      title: 'long_break'.tr,
-                      trailingText:
-                          '${controller.longBreakMinutes.value} ${'minutes_short'.tr}',
-                      onTap: () => showDurationPickerSheet(
-                        context: context,
-                        title: 'long_break'.tr,
-                        initialValue: controller.longBreakMinutes.value,
-                        onSelected: controller.updateLongBreak,
-                      ),
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 32),
+              settingsSectionHeader(text: 'language_section'.tr),
+              const SizedBox(height: 12),
               settingsSectionCard(
                 children: [
                   settingsTile(
@@ -130,7 +105,13 @@ class SettingsView extends GetView<SettingsController> {
                         : 'english'.tr,
                     onTap: () => showLanguageDialog(context, localeController),
                   ),
-                  const Divider(height: 0),
+                ],
+              ),
+              const SizedBox(height: 32),
+              settingsSectionHeader(text: 'app_info'.tr),
+              const SizedBox(height: 12),
+              settingsSectionCard(
+                children: [
                   Obx(
                     () => settingsTile(
                       icon: Icons.info_rounded,

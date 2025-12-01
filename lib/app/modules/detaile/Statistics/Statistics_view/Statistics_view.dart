@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:forest/app/core/constants/app_colors.dart';
 import 'package:forest/app/modules/detaile/Statistics/Statistics_controller/Statistics_controller.dart';
 import '../widget/Statistics_widget.dart';
+import '../widget/stats_text.dart';
 
 class StatisticsView extends GetView<StatisticsController> {
   const StatisticsView({super.key});
@@ -19,82 +19,43 @@ class StatisticsView extends GetView<StatisticsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(height: 50),
-                  Text(
-                    'Statistics'.tr,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textColor,
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  Text(
-                    'Week'.tr,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                  statsHeading('statistics'.tr),
+                  const SizedBox(height: 30),
+                  // Today's Focus
+                  statsSection('today_focus'.tr),
+                  const SizedBox(height: 12),
                   Obx(
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          '${controller.weeklyHours.value}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          'h',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          '${controller.weeklyMinutes.value}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          'm',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
+                        statsValueLarge('${controller.todayMinutes.value}'),
+                        const SizedBox(width: 5),
+                        statsLabel('minutes'.tr),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 75),
+                  const SizedBox(height: 40),
+                  // Week Summary
+                  statsSection('Week'.tr),
+                  const SizedBox(height: 12),
                   Obx(
-                    () => StatisticsChart(
-                      dayLabels: controller.dayLabels,
-                      dayValues: controller.dayValues,
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        statsValueMedium('${controller.weeklyHours.value}'),
+                        const SizedBox(width: 3),
+                        statsValueMedium('h'.tr),
+                        const SizedBox(width: 10),
+                        statsValueMedium('${controller.weeklyMinutes.value}'),
+                        const SizedBox(width: 3),
+                        statsValueMedium('m'.tr),
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 40),
+                  statisticsChart(controller: controller),
                   const SizedBox(height: 89),
-                  Text(
-                    'All - time'.tr,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textColor,
-                    ),
-                  ),
+                  statsSection('All - time'.tr),
                   const SizedBox(height: 50),
                   Obx(
                     () => Row(
@@ -105,23 +66,9 @@ class StatisticsView extends GetView<StatisticsController> {
                           width: 50,
                           height: 50,
                         ),
-                        Text(
-                          '${controller.allTimeMinutes.value}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
+                        statsValueMedium('${controller.allTimeMinutes.value}'),
                         const SizedBox(width: 3),
-                        Text(
-                          'minutes'.tr,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textColor,
-                          ),
-                        ),
+                        statsValueMedium('minutes'.tr),
                       ],
                     ),
                   ),

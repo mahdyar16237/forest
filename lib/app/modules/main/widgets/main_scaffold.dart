@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:forest/app/core/constants/app_colors.dart';
 import 'package:forest/app/modules/main/main_controllers/main_controller.dart';
 
 class MainScaffold extends StatelessWidget {
@@ -55,8 +56,8 @@ class MainScaffold extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     type: BottomNavigationBarType.fixed,
-                    selectedItemColor: const Color(0xFF1F4D1F),
-                    unselectedItemColor: const Color(0xFF2E402E),
+                    selectedItemColor: AppColors.navSelected,
+                    unselectedItemColor: AppColors.navUnselected,
                     selectedLabelStyle: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
@@ -71,7 +72,7 @@ class MainScaffold extends StatelessWidget {
                       ),
                       BottomNavigationBarItem(
                         icon: const Icon(Icons.settings_rounded),
-                        label: 'Settings'.tr,
+                        label: 'settings'.tr,
                       ),
                     ],
                   ),

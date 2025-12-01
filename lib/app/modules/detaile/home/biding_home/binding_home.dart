@@ -4,6 +4,8 @@ import 'package:forest/app/modules/detaile/home/controllers_home/controller_home
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ControllerHome());
+    if (!Get.isRegistered<ControllerHome>()) {
+      Get.put<ControllerHome>(ControllerHome(), permanent: true);
+    }
   }
 }
